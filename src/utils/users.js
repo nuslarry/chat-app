@@ -18,6 +18,7 @@ const addUser = ({ id, username, room})=>{
         return user.room ===room && user.username===username
     })
 
+    
     //validating user
     if (existingUser) {
         return {

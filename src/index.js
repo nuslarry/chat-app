@@ -28,6 +28,10 @@ io.on('connection', (socket)=>{
         socket.broadcast.to(user.room).emit('message',generateMessage('Admin',`${user. username} has joined!`))
         // socket.emit, io.emit, socket.broadcast.emit
         // io.to.emit, socket.broadcast.to.emit
+        io.to(user.room).emit('roomData',{
+            room: user.name,
+            users: getUsersInRoom(user.room)
+        })
     })
 
     socket.on('sendMessage',(message,callback)=>{
@@ -49,6 +53,10 @@ io.on('connection', (socket)=>{
         const user=removeUser(socket.id)
          if (user){
             io.to(user.room).emit('message',generateMessage('Admin', `${user.username} has left`))
+            io.to(user.room).emit('roomData',{
+                room: user.room,
+                users: getUsersInRoom(user.room)
+            })
          }
     })
 })
